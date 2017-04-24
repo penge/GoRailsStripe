@@ -26,3 +26,7 @@
 #container {
   padding: 20px 33px;
 }
+
+.hidden {
+  display: none;
+}

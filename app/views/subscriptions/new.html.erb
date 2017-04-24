@@ -1,6 +1,17 @@
 <h1>Subscribe!</h1>
 
 <%= form_tag subscription_path, id: "payment-form" do %>
+  <% if current_user.card_last4? %>
+    <div class="card-on-file">
+      <div><b>Your current card on file is:</b></div>
+      <div><%= current_user.card_brand %> **** **** **** <%= current_user.card_last4 %></div>
+      <div>Expires <%= current_user.card_exp_month %> / <%= current_user.card_exp_year %></div>
+
+      <p><%= link_to "Use a different card", "#", class: "use-different-card" %></p>
+    </div>
+  <% end %>
+
+  <div class="card-fields <%= card_fields_class %>">
   <div class="form-row">
     <label for="card-element">
       Credit or debit card
@@ -11,6 +22,7 @@
 
     <!-- Used to display form errors -->
     <div id="card-errors"></div>
+  </div>
   </div>
 
   <button>Submit Payment</button>

@@ -4,6 +4,12 @@ $(document).on('turbolinks:load', function() {
   }
 
   loadStripe();
+
+  $(".use-different-card").click(function(event) {
+    event.preventDefault();
+    $(".card-on-file").hide();
+    $(".card-fields").removeClass("hidden");
+  });
 });
 
 function loadStripe() {
@@ -40,6 +46,13 @@ function loadStripe() {
   var form = document.getElementById('payment-form');
   form.addEventListener('submit', function(event) {
     event.preventDefault();
+
+    if ($(".card-fields").hasClass("hidden")) {
+      // Use the card on file
+      var $form = $('#payment-form');
+      $form.submit();
+      return;
+    }
 
     stripe.createToken(card).then(function(result) {
       if (result.error) {
